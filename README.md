@@ -6,7 +6,11 @@ This package is only available for PHP 7.
 
 ## Installation
 
-TODO: add composer installation instructions
+Using [Composer](https://getcomposer.org), require this package in the root directory of your project.
+
+```bash
+$ composer require 'soundways/iso7064'
+```
 
 ### Dependencies
 
@@ -14,7 +18,19 @@ TODO: add composer installation instructions
 
 ## Quickstart
 
-TODO
+Calculate a check character using a GRid object:
+
+```php
+use Soundways\Iso7064\GRid;
+
+$grid = new GRid('A1-2425G-ABC1234002');
+
+$grid->encode();
+
+$grid->getDelimitedGRid();
+
+// returns 'A1-2425G-ABC1234002-M'
+```
 
 ## Reference
 
