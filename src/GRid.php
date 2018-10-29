@@ -54,7 +54,6 @@ class GRid extends Mod3736
 	 * code in standard hyphen-delimited format.
 	 *
 	 * @throws GRidException
-	 *
 	 * @throws InvalidArgumentException
 	 *
 	 * @return string
@@ -108,7 +107,7 @@ class GRid extends Mod3736
 	 *
 	 * @return void
 	 */
-	private function checkFormat(string $code) {
+	private function checkFormat(string $code): void {
 		if (!$code) { $code = $this->getCodeOrFail(); }
 
 		$char_count = mb_strlen($this->code);

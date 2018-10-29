@@ -143,7 +143,7 @@ class Mod3736
 	 *
 	 * @return void
 	 */
-	public function setCode(string $code) {
+	public function setCode(string $code): void {
 		$this->code = self::parseCode($code);
 	}
 	
@@ -172,7 +172,7 @@ class Mod3736
 		return substr($code, -1);
 	}
 
-	private function getCodeOrFail() {
+	private function getCodeOrFail(): string {
 		if ($this->code == NULL) {
 			throw new InvalidArgumentException('Cannot perform method on NULL');
 		}
