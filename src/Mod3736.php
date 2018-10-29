@@ -78,8 +78,10 @@ class Mod3736
 	 *
 	 * @return void
 	 */
-	public function __construct(string $code = NULL) {
-		$this->code = self::parseCode($code);
+	public function __construct(?string $code = NULL) {
+		if ($code) {
+			$this->code = self::parseCode($code);
+		}
 	}
 	
 	/**
@@ -106,7 +108,7 @@ class Mod3736
 	 *
 	 * @return string
 	 */
-	public function generateCheckChar(string $code = NULL): string {
+	public function generateCheckChar(?string $code = NULL): string {
 		if (!$code) { $code = $this->getCodeOrFail(); }
 		$p = 36;
 		for($j = 0; $j < mb_strlen($code); $j++) {
@@ -129,7 +131,7 @@ class Mod3736
 	 *
 	 * @return bool
 	 */
-	public function validateCheckChar(string $code = NULL): bool {
+	public function validateCheckChar(?string $code = NULL): bool {
 		if (!$code) { $code = $this->getCodeOrFail(); }
 		$check_char = self::getCheckChar($code);
 		$valid_check_char = $this->generateCheckChar(substr($code, 0, -1));
@@ -167,7 +169,7 @@ class Mod3736
 	 *
 	 * @return string
 	 */
-	public function getCheckChar(string $code = NULL): string {
+	public function getCheckChar(?string $code = NULL): string {
 		if (!$code) { $code = $this->getCodeOrFail(); }
 		return substr($code, -1);
 	}
