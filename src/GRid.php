@@ -85,7 +85,7 @@ class GRid extends Mod3736
 	 *
 	 * @return bool
 	 */
-	public function validateCheckChar(): bool {
+	public function validateCheckChar(?string $code = NULL): bool {
 		if (!$this->is_encoded) {
 			$error = 'GRid code '
 			       . $this->code
@@ -107,7 +107,7 @@ class GRid extends Mod3736
 	 *
 	 * @return void
 	 */
-	private function checkFormat(string $code): void {
+	private function checkFormat(?string $code = NULL): void {
 		if (!$code) { $code = $this->getCodeOrFail(); }
 
 		$char_count = mb_strlen($this->code);
