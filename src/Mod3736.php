@@ -24,7 +24,7 @@ class Mod3736
 	 *
 	 * @var string
 	 */
-	private $code;
+	protected $code;
 	
 	/**
 	 * The numerical values assigned to valid alphanumeric
@@ -32,7 +32,7 @@ class Mod3736
 	 *
 	 * @var array
 	 */
-	private static $val_dict = [
+	protected static $val_dict = [
 		'0' => 0,
 		'1' => 1,
 		'2' => 2,
@@ -174,7 +174,7 @@ class Mod3736
 		return substr($code, -1);
 	}
 
-	private function getCodeOrFail(): string {
+	protected function getCodeOrFail(): string {
 		if ($this->code == NULL) {
 			throw new InvalidArgumentException('Cannot perform method on NULL');
 		}
@@ -188,7 +188,7 @@ class Mod3736
 	 *
 	 * @return int
 	 */
-	private static function charToVal(string $char): int {
+	protected static function charToVal(string $char): int {
 		return self::$val_dict[$char];
 	}
 	
@@ -199,7 +199,7 @@ class Mod3736
 	 *
 	 * @return string
 	 */
-	private static function valToChar(int $val): string {
+	protected static function valToChar(int $val): string {
 		return array_search($val, self::$val_dict);
 	}
 	
@@ -210,7 +210,7 @@ class Mod3736
 	 *
 	 * @return string
 	 */
-	private static function parseCode(string $code): string {
+	protected static function parseCode(string $code): string {
 		$code = preg_replace('/[^0-9A-Za-z]/', '', $code);
 		return strtoupper($code);
 	}

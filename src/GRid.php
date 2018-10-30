@@ -152,7 +152,7 @@ class GRid extends Mod3736
 	 *
 	 * @return string
 	 */
-	private static function parseCode(string $code): string {
+	protected static function parseCode(string $code): string {
 		$parsed_code = parent::parseCode($code);
 		$this->checkFormat($parsed_code);
 		return $parsed_code;
