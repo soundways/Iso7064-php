@@ -251,9 +251,6 @@ class GRidTest extends TestCase
 		$grid = new GRid($this->goodGRidsUnencoded()[0]);
 		$grid->validateCheckChar();
 	}
-	// !!!!!!
-	// FAILED
-	// !!!!!!
 
 	/**
 	 * Test that valid external GRid codes are properly verified.

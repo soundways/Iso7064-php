@@ -120,6 +120,21 @@ class GRid extends Mod3736
 	}
 
 	/**
+	 * Setter for $this->code
+	 *
+	 * @param string $code
+	 *
+	 * @throws GRidException
+	 *
+	 * @return void
+	 */
+	public function setCode(string $code): void {
+		$code = self::parseCode($code);
+		$this->checkFormat($code);
+		$this->code = $code;
+	}
+
+	/**
 	 * Helper function which returns the GRid
 	 * code in standard hyphen-delimited format.
 	 *
