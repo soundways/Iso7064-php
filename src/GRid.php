@@ -24,6 +24,20 @@ class GRid extends Mod3736
 	 * @var bool
 	 */
 	private $is_encoded;
+
+	/**
+	 * Create a new GRid instance.
+	 *
+	 * @param string $code default NULL
+	 *
+	 * @return void
+	 */
+	public function __construct(?string $code = NULL) {
+		if ($code) {
+			$this->code = self::parseCode($code);
+			$this->checkFormat();
+		}
+	}
 	
 	/**
 	 * Generate a check character for the current code,
@@ -48,7 +62,63 @@ class GRid extends Mod3736
 		}
 		return parent::encode();
 	}
+
+	/**
+	 * Generate a check character for the given
+	 * 
+	 * @param  string $code default NULL
+	 *
+	 * @throws InvalidArgumentException
+	 * @throws GRidException
+	 * 
+	 * @return string
+	 */
+	public function generateCheckChar(?string $code = NULL): string {
+		if (!$code) { 
+			$code = $this->getCodeOrFail(); 
+		} else {
+			$code = self::parseCode($code);
+		}
+		$this->checkFormat($code);
+		if ($this->is_encoded) {
+			$error = 'GRid code '
+			       . $code
+			       . ' already contains a check character ('
+			       . $this->getCheckChar($code)
+			       . ').';
+			throw new GRidException($error);
+		}
+		return parent::generateCheckChar($code);
+	}
 	
+	/**
+	 * If the instance's code is an encoded GRid,
+	 * validates the GRid's check character.
+	 *
+	 * @throws GRidException
+	 * @throws InvalidArgumentException
+	 *
+	 * @return bool
+	 */
+	public function validateCheckChar(?string $code = NULL): bool {
+		if (!$code) { 
+			$code = $this->getCodeOrFail(); 
+		} else {
+			$code = self::parseCode($code);
+		}
+
+		$this->checkFormat($code);
+
+		if (!$this->is_encoded) {
+			$error = 'GRid code '
+			       . $code
+			       . ' does not contain a check character.';
+			throw new GRidException($error);
+		}
+
+		return parent::validateCheckChar($code);
+	}
+
 	/**
 	 * Helper function which returns the GRid
 	 * code in standard hyphen-delimited format.
@@ -77,25 +147,6 @@ class GRid extends Mod3736
 	}
 	
 	/**
-	 * If the instance's code is an encoded GRid,
-	 * validates the GRid's check character.
-	 *
-	 * @throws GRidException
-	 * @throws InvalidArgumentException
-	 *
-	 * @return bool
-	 */
-	public function validateCheckChar(?string $code = NULL): bool {
-		if (!$this->is_encoded) {
-			$error = 'GRid code '
-			       . $this->code
-			       . ' does not contain a check character.';
-			throw new GRidException($error);
-		}
-		return parent::validateCheckChar($this->code);
-	}
-	
-	/**
 	 * Checks that the given code has a valid GRid
 	 * length and whether it contains a check character
 	 * as per the GRid standard.
@@ -110,7 +161,7 @@ class GRid extends Mod3736
 	private function checkFormat(?string $code = NULL): void {
 		if (!$code) { $code = $this->getCodeOrFail(); }
 
-		$char_count = mb_strlen($this->code);
+		$char_count = mb_strlen($code);
 
 		if ($char_count == 17) {
 			$this->is_encoded = false;
@@ -136,25 +187,9 @@ class GRid extends Mod3736
 	 *
 	 * @return bool
 	 */
-	public static function checkGrid(string $code): bool {
+	public static function checkGRid(string $code): bool {
 		$grid = new GRid($code);
 		return $grid->validateCheckChar();
 	}
-	
-	/**
-	 * Converts code for use in calculation and
-	 * checks for the existence of a check
-	 * character.
-	 *
-	 * @param string $code
-	 *
-	 * @throws GRidException
-	 *
-	 * @return string
-	 */
-	protected static function parseCode(string $code): string {
-		$parsed_code = parent::parseCode($code);
-		$this->checkFormat($parsed_code);
-		return $parsed_code;
-	}
+
 }
