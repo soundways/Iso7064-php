@@ -12,8 +12,8 @@ namespace Soundways\Iso7064;
 
 /**
  * This is the ISO 7064 Formatting Exception class.
- * Implementation standard's unique errors will all
- * inherit from this class.
+ * Different mods and implementation standard's 
+ * unique errors will all inherit from this class.
  *
  * @author James Ekrut <james@soundways.com>
  */
