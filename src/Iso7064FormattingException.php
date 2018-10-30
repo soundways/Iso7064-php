@@ -5,17 +5,20 @@
  * (c) Soundways <team@soundways.com>
  *
  * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
+ * the LICENSE file that was distributed with this source code
  */
 
 namespace Soundways\Iso7064;
 
 /**
- * This is the GRid exception class.
+ * This is the ISO 7064 Formatting Exception class.
+ * Implementation standard's unique errors will all
+ * inherit from this class.
  *
  * @author James Ekrut <james@soundways.com>
  */
-class GRidException extends Iso7064FormattingException
+class Iso7064FormattingException extends \Exception
 {
 	//
 }
+
