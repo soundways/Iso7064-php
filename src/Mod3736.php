@@ -32,7 +32,13 @@ class Mod3736
 	 *
 	 * @var array
 	 */
-	protected static $char_val_dict = [
+	protected static $char_table = [
+		'0', '1', '2', '3', '4', '5', 
+		'6', '7', '8', '9', 'A', 'B',
+		'C', 'D', 'E', 'F', 'G', 'H',
+		'I', 'J', 'K', 'L', 'M', 'N',
+		'O', 'P', 'Q', 'R', 'S', 'T',
+		'U', 'V', 'W', 'X', 'Y', 'Z',
 		'0' => 0,  '1' => 1,  '2' => 2,
 		'3' => 3,  '4' => 4,  '5' => 5,
 		'6' => 6,  '7' => 7,  '8' => 8,
@@ -45,15 +51,6 @@ class Mod3736
 		'R' => 27, 'S' => 28, 'T' => 29,
 		'U' => 30, 'V' => 31, 'W' => 32,
 		'X' => 33, 'Y' => 34, 'Z' => 35,
-	];
-
-	protected static $val_char_dict = [
-		'0', '1', '2', '3', '4', '5', 
-		'6', '7', '8', '9', 'A', 'B',
-		'C', 'D', 'E', 'F', 'G', 'H',
-		'I', 'J', 'K', 'L', 'M', 'N',
-		'O', 'P', 'Q', 'R', 'S', 'T',
-		'U', 'V', 'W', 'X', 'Y', 'Z',
 	];
 
 	/**
@@ -73,7 +70,7 @@ class Mod3736
 	 *
 	 * @throws InvalidArgumentException
 	 *
-	 * @return string
+	 * @return string Code with newly generated check character
 	 */
 	public function encode(): string {
 		$this->code .= $this->generateCheckChar();
@@ -88,7 +85,7 @@ class Mod3736
 	 *
 	 * @throws InvalidArgumentException
 	 *
-	 * @return string
+	 * @return string Generated check character
 	 */
 	public function generateCheckChar(?string $code = NULL): string {
 		if (!$code) {
@@ -96,11 +93,11 @@ class Mod3736
 		}
 		$p = 36;
 		for($j = 0; $j < mb_strlen($code); $j++) {
-			$a = self::charToVal($code[$j]);
+			$a = self::convertCharVal($code[$j]);
 			$s = ($p % 37) + $a;
 			$p = ($s % 36 ?: 36) * 2;
 		}
-		return self::valToChar(37 - ($p % 37));
+		return self::convertCharVal(37 - ($p % 37));
 	}
 	
 	/**
@@ -109,7 +106,7 @@ class Mod3736
 	 * for the given code.  Will use the class's code if
 	 * one is not passed as an argument.
 	 *
-	 * @return bool
+	 * @return bool True if valid, false if invalid
 	 */
 	public function validateCheckChar(): bool {
 		$check_char = $this->getCheckChar();
@@ -142,32 +139,22 @@ class Mod3736
 	 * or the instance's code, assuming that character
 	 * is a check character.
 	 *
-	 * @return string
+	 * @return string Check character
 	 */
 	public function getCheckChar(): string {
 		return substr($this->code, -1);
 	}
 	
 	/**
-	 * Converts given character to it's given value.
-	 *
-	 * @param string $char
-	 *
-	 * @return int
+	 * Converts an integer value to it's respective character
+	 * or vice versa as per the ISO 7064 character table.
+	 * 
+	 * @param  string|int $lookup Character or integer to convert
+	 * 
+	 * @return int|string The converted value or character of $lookup
 	 */
-	protected static function charToVal(string $char): int {
-		return self::$char_val_dict[$char];
-	}
-	
-	/**
-	 * Given a value, returns the character with that value.
-	 *
-	 * @param int $val
-	 *
-	 * @return string
-	 */
-	protected static function valToChar(int $val): string {
-		return self::$val_char_dict[$val];
+	protected static function convertCharVal($lookup) {
+		return self::$char_table[$lookup];
 	}
 	
 	/**

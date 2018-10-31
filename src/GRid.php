@@ -46,7 +46,7 @@ class GRid extends Mod3736
 	 * @throws InvalidArgumentException
 	 * @throws GRidException
 	 *
-	 * @return string
+	 * @return string GRid with newly generated check character
 	 */
 	public function encode(): string {
 		$this->checkFormat();
@@ -69,7 +69,7 @@ class GRid extends Mod3736
 	 * @throws InvalidArgumentException
 	 * @throws GRidException
 	 * 
-	 * @return string
+	 * @return string Generated check character
 	 */
 	public function generateCheckChar(?string $code = NULL): string {
 		if (!$code) {
@@ -101,7 +101,7 @@ class GRid extends Mod3736
 	 * @throws GRidException
 	 * @throws InvalidArgumentException
 	 *
-	 * @return bool
+	 * @return bool True if valid, false if invalid
 	 */
 	public function validateCheckChar(): bool {
 		$this->checkFormat();
@@ -138,7 +138,7 @@ class GRid extends Mod3736
 	 * @throws GRidException
 	 * @throws InvalidArgumentException
 	 *
-	 * @return string
+	 * @return string Hypen-delimited GRid
 	 */
 	public function getDelimitedGRid(): string {
 		$grid = $this->code;
@@ -187,12 +187,12 @@ class GRid extends Mod3736
 	 * Helper function to validate the check character 
 	 * on a given code in GRid standard format.
 	 *
-	 * @param string $code
+	 * @param string $code 
 	 *
 	 * @throws GRidException
 	 * @throws InvalidArgumentException
 	 *
-	 * @return bool
+	 * @return bool True if valid, false if invalid
 	 */
 	public static function checkGRid(string $code): bool {
 		$grid = new GRid($code);
