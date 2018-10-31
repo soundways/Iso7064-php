@@ -119,22 +119,7 @@ class GRidTest extends TestCase
 	}
 
 	/**
-	 * Test that new instance can be created with null code.
-	 * 
-	 * @return void
-	 */
-	public function testCanBeInstantiatedWithNoConstructorArgument(): void
-	{
-		$this->assertInstanceOf(
-			GRid::class,
-			new GRid()
-		);
-	}
-
-	/**
 	 * Test that new instance can be created with valid code.
-	 * 
-	 * @return void
 	 */
 	public function testCanBeInstantiatedWithGivenGrid(): void
 	{
@@ -148,8 +133,6 @@ class GRidTest extends TestCase
 
 	/**
 	 * Test that invalid constructor type throws TypeError.
-	 * 
-	 * @return void
 	 */
 	public function testRejectsInvalidConstructorTypes(): void
 	{
@@ -159,20 +142,16 @@ class GRidTest extends TestCase
 
 	/**
 	 * Test that invalid setter type throws TypeError
-	 * 
-	 * @return void
 	 */
 	public function testRejectsInvalidSetterTypes(): void
 	{
 		$this->expectException(\TypeError::class);
-		$grid = new GRid();
+		$grid = new GRid($this->goodGridsEncoded()[0]);
 		$grid->setCode([]);
 	}
 
 	/**
 	 * Test that GRid::encode returns correctly encoded GRids
-	 * 
-	 * @return void
 	 */
 	public function testEncodesConstructedGrid(): void
 	{
@@ -188,8 +167,6 @@ class GRidTest extends TestCase
 	/**
 	 * Test that GRid::encode throws a GRidException when
 	 * attempting to encode an already-encoded GRid
-	 * 
-	 * @return void
 	 */
 	public function testRejectsAttemptToEncodeAnAlreadyEncodedGrid(): void
 	{
@@ -199,37 +176,7 @@ class GRidTest extends TestCase
 	}
 
 	/**
-	 * Test that external code check characters are correctly generated.
-	 * 
-	 * @return void 
-	 */
-	public function testEncodesExternalGrid(): void
-	{
-		$grid = new GRid();
-		foreach($this->unencodedAndEncodedGRids() as $code) {
-			$this->assertEquals(
-				$grid->getCheckChar($code[1]),
-				$grid->generateCheckChar($code[0])
-			);
-		}
-	}
-
-	/**
-	 * Test that GRid::generateCheckChar rejects an already encoded GRid
-	 * 
-	 * @return void
-	 */
-	public function testRejectsAttemptToEncodeAnEncodedExternalGrid(): void
-	{
-		$this->expectException(GRidException::class);
-		$grid = new GRid();
-		$grid->generateCheckChar($this->goodGRidsEncoded()[0]);
-	}
-
-	/**
 	 * Test that valid GRid codes are properly verified.
-	 * 
-	 * @return void 
 	 */
 	public function testVerifiesValidGridCodes(): void
 	{
@@ -242,8 +189,6 @@ class GRidTest extends TestCase
 	/**
 	 * Test that no attempt is made to verify validity of unencoded
 	 * GRids and the correct format exception is thrown.
-	 * 
-	 * @return void
 	 */
 	public function testRejectsVerificationForUnencodedGrids(): void
 	{
@@ -253,35 +198,7 @@ class GRidTest extends TestCase
 	}
 
 	/**
-	 * Test that valid external GRid codes are properly verified.
-	 * 
-	 * @return void
-	 */
-	public function testVerifiesValidExternalGridCodes(): void
-	{
-		$grid = new GRid();
-		foreach($this->goodGRidsEncoded() as $code) {
-			$this->assertTrue($grid->validateCheckChar($code));
-		}
-	}
-
-	/**
-	 * Test that exception is thrown when attempting to validate
-	 * and unencoded external GRid.
-	 * 
-	 * @return void
-	 */
-	public function testRejectsVerificationForUnencodedExternalGRids(): void
-	{
-		$this->expectException(GRidException::class);
-		$grid = new GRid();
-		$grid->validateCheckChar($this->goodGRidsUnencoded()[0]);
-	}
-
-	/**
 	 * Test that badly encoded GRid codes are identified
-	 * 
-	 * @return void
 	 */
 	public function testIdentifiesInvalidGridCodes(): void
 	{
@@ -292,23 +209,7 @@ class GRidTest extends TestCase
 	} 
 
 	/**
-	 * Test that badly encoded external GRid codes are 
-	 * correctly identified.
-	 * 
-	 * @return void
-	 */
-	public function testIdentifiesInvalidExternalGridCodes(): void
-	{
-		$grid = new GRid();
-		foreach($this->badGRidsEncoded() as $code) {
-			$this->assertFalse($grid->validateCheckChar($code));
-		}
-	} 
-
-	/**
 	 * Test that valid GRids can be verified statically.
-	 * 
-	 * @return void
 	 */
 	public function testCanStaticallyValidateGridCodes(): void
 	{
@@ -319,8 +220,6 @@ class GRidTest extends TestCase
 
 	/**
 	 * Test that static GRid verification rejects badly formatted codes.
-	 * 
-	 * @return void 
 	 */
 	public function testRejectsBadlyFormattedGridsDuringStaticCheck(): void
 	{
@@ -331,8 +230,6 @@ class GRidTest extends TestCase
 	/**
 	 * Test that static GRid verification rejects good but
 	 * unencoded GRid codes
-	 * 
-	 * @return void 
 	 */
 	public function testRejectsUnencodedGridDuringStaticCheck(): void
 	{
@@ -342,8 +239,6 @@ class GRidTest extends TestCase
 
 	/**
 	 * Test that encoded GRids are exported in correct format
-	 * 
-	 * @return void
 	 */
 	public function testExportsGridFormat(): void
 	{
@@ -360,8 +255,6 @@ class GRidTest extends TestCase
 	/**
 	 * Test that formatting exception gets thrown when trying
 	 * to get formatted version of an unencoded GRid
-	 * 
-	 * @return void
 	 */
 	public function testRejectsFormatCallOnUnencodedGrid(): void
 	{
@@ -371,23 +264,8 @@ class GRidTest extends TestCase
 	}
 
 	/**
-	 * Test that encoding functions called on null or empty
-	 * strings fail correctly.
-	 * 
-	 * @return void
-	 */
-	public function testThrowsInvalidArgumentExceptionWhenNoStringIsProvided(): void
-	{
-		$this->expectException(\InvalidArgumentException::class);
-		$grid = new GRid();
-		$grid->encode();
-	}
-
-	/**
 	 * Test that given codes that are the wrong length are
 	 * rejected during instantiation.
-	 * 
-	 * @return void
 	 */
 	public function testThrowsGridExceptionOnInvalidString(): void
 	{
@@ -398,8 +276,6 @@ class GRidTest extends TestCase
 	/**
 	 * Test that given codes that are the correct format
 	 * but are missing the GRid identifier (A1) are rejected
-	 * 
-	 * @return void
 	 */
 	public function testThrowsGridExceptionWhenGridIdentifierIsMissing(): void
 	{

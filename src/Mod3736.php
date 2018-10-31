@@ -84,14 +84,19 @@ class Mod3736
 	 * Generate a check character for the given string
 	 * or the class's current code.
 	 *
+	 * @param string $code Unencoded string
+	 *
 	 * @throws InvalidArgumentException
 	 *
 	 * @return string
 	 */
-	public function generateCheckChar(): string {
+	public function generateCheckChar(?string $code = NULL): string {
+		if (!$code) {
+			$code = $this->code;
+		}
 		$p = 36;
-		for($j = 0; $j < mb_strlen($this->code); $j++) {
-			$a = self::charToVal($this->code[$j]);
+		for($j = 0; $j < mb_strlen($code); $j++) {
+			$a = self::charToVal($code[$j]);
 			$s = ($p % 37) + $a;
 			$p = ($s % 36 ?: 36) * 2;
 		}
@@ -107,7 +112,7 @@ class Mod3736
 	 * @return bool
 	 */
 	public function validateCheckChar(): bool {
-		$check_char = self::getCheckChar();
+		$check_char = $this->getCheckChar();
 		$valid_check_char = $this->generateCheckChar(substr($this->code, 0, -1));
 		return ($check_char == $valid_check_char);
 	}

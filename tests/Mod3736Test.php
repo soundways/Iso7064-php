@@ -14,29 +14,14 @@ use Soundways\Iso7064\Mod3736;
 use PHPUnit\Framework\TestCase;
 
 /**
- * This is the Mod3076 test class.
+ * This is the Mod3736 test class.
  *
  * @author  James Ekrut <james@soundways.com>
  */
-class Mod4746Test extends TestCase
+class Mod3736Test extends TestCase
 {	
 	/**
-	 * Test that new instance can be created with null code.
-	 * 
-	 * @return void
-	 */
-	public function testCanBeInstantiatedWithNoConstructorArgument(): void
-	{
-		$this->assertInstanceOf(
-			Mod3736::class,
-			new Mod3736()
-		);
-	}
-
-	/**
 	 * Test that new instance can be created with code.
-	 * 
-	 * @return void 
 	 */
 	public function testCanBeInstantiatedWithGivenString(): void
 	{
@@ -49,8 +34,6 @@ class Mod4746Test extends TestCase
 	/**
 	 * Test that constructor rejects types which cannot be
 	 * cast to string.
-	 * 
-	 * @return void
 	 */
 	public function testRejectsInvalidConstructorTypes(): void
 	{
@@ -66,15 +49,13 @@ class Mod4746Test extends TestCase
 	 */
 	public function testRejectsInvalidTypesInSetter(): void
 	{
-		$mod = new Mod3736();
+		$mod = new Mod3736('string');
 		$this->expectException(\TypeError::class);
 		$mod->setCode([]);
 	}
 
 	/**
 	 * Test that instance with class code can properly encode.
-	 *
-	 * @return void
 	 */
 	public function testCanEncodeAGivenString(): void
 	{
@@ -87,24 +68,8 @@ class Mod4746Test extends TestCase
 	}
 
 	/**
-	 * Test that object instance can generate char for external string.
-	 * 
-	 * @return void 
-	 */
-	public function testCanEncodeAnExternalString(): void
-	{
-		$mod = new Mod3736();
-		$this->assertEquals(
-			'R',
-			$mod->generateCheckChar('ABCDEFG')
-		);
-	}
-
-	/**
 	 * Test that check character validation can detect
 	 * correct check characters.
-	 * 
-	 * @return void
 	 */
 	public function testCanIdentifyCorrectlyFormattedCheckChars(): void
 	{
@@ -115,26 +80,10 @@ class Mod4746Test extends TestCase
 	/**
 	 * Test that check character validation can detect 
 	 * incorrect check characters.
-	 * 
-	 * @return void 
 	 */
 	public function testCanIdentifyIncorrectlyFormattedCheckChars(): void
 	{
 		$mod = new Mod3736('XYZ123H');
 		$this->assertFalse($mod->validateCheckChar());
 	}
-
-	/**
-	 * Test that encoding functions called on null or empty
-	 * strings fail correctly.
-	 * 
-	 * @return void
-	 */
-	public function testThrowsInvalidArgumentExceptionWhenNoStringIsProvided(): void
-	{
-		$mod = new Mod3736();
-		$this->expectException(\InvalidArgumentException::class);
-		$mod->encode();
-	}
-
 }

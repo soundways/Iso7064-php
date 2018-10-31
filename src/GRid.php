@@ -64,12 +64,22 @@ class GRid extends Mod3736
 	/**
 	 * Generate a check character for the given
 	 *
+	 * @param string $code Unencoded GRid
+	 *
 	 * @throws InvalidArgumentException
 	 * @throws GRidException
 	 * 
 	 * @return string
 	 */
-	public function generateCheckChar(): string {
+	public function generateCheckChar(?string $code = NULL): string {
+		if (!$code) {
+			$code = $this->code;
+			$storing_code = false;
+		} else {
+			$current_code = $this->code;
+			$this->code = $code;
+			$storing_code = true;
+		}
 		$this->checkFormat();
 		if ($this->is_encoded) {
 			$error = 'GRid code '
@@ -79,7 +89,9 @@ class GRid extends Mod3736
 			       . ').';
 			throw new GRidException($error);
 		}
-		return parent::generateCheckChar();
+		$check_char =  parent::generateCheckChar();
+		if ($storing_code) { $this->code = $current_code; }
+		return $check_char;
 	}
 	
 	/**
