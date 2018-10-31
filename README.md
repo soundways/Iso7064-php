@@ -54,21 +54,21 @@ $code .= $mod->generateCheckChar($code);
 
 Generates and returns a check character for the given code.  If a code is not passed as an argument, the function will instead use the object's `$code` attribute.
 
-#### function validateCheckChar(string $code): bool
+#### function validateCheckChar(): bool
 
-Takes the check character from the given string and returns whether it matches the string's calculated check character.  If a code is not passed as an argument, the function will instead use the object's `$code` attribute.
+Takes the check character from the object's `$code` attribute and returns whether it matches the string's calculated check character.  
 
 #### function setCode(string $code): void
 
 Setter for the `$code` attribute.  Strips non-alphanumeric characters automatically.
 
-#### function getCode(string $code): string
+#### function getCode(): string
 
 Getter for the `$code` attribute.
 
-#### function getCheckChar(string $code): string
+#### function getCheckChar(): string
 
-Helper function for returning the last character of a string.  If a code is not passed as an argument, the function will instead use the object's `$code` attribute.
+Helper function for returning the last character of the object's `$code` attribute. 
 
 ### GRid
 
