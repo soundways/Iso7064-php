@@ -32,56 +32,39 @@ class Mod3736
 	 *
 	 * @var array
 	 */
-	protected static $val_dict = [
-		'0' => 0,
-		'1' => 1,
-		'2' => 2,
-		'3' => 3,
-		'4' => 4,
-		'5' => 5,
-		'6' => 6,
-		'7' => 7,
-		'8' => 8,
-		'9' => 9,
-		'A' => 10,
-		'B' => 11,
-		'C' => 12,
-		'D' => 13,
-		'E' => 14,
-		'F' => 15,
-		'G' => 16,
-		'H' => 17,
-		'I' => 18,
-		'J' => 19,
-		'K' => 20,
-		'L' => 21,
-		'M' => 22,
-		'N' => 23,
-		'O' => 24,
-		'P' => 25,
-		'Q' => 26,
-		'R' => 27,
-		'S' => 28,
-		'T' => 29,
-		'U' => 30,
-		'V' => 31,
-		'W' => 32,
-		'X' => 33,
-		'Y' => 34,
-		'Z' => 35,
+	protected static $char_val_dict = [
+		'0' => 0,  '1' => 1,  '2' => 2,
+		'3' => 3,  '4' => 4,  '5' => 5,
+		'6' => 6,  '7' => 7,  '8' => 8,
+		'9' => 9,  'A' => 10, 'B' => 11,
+		'C' => 12, 'D' => 13, 'E' => 14,
+		'F' => 15, 'G' => 16, 'H' => 17,
+		'I' => 18, 'J' => 19, 'K' => 20,
+		'L' => 21, 'M' => 22, 'N' => 23,
+		'O' => 24, 'P' => 25, 'Q' => 26,
+		'R' => 27, 'S' => 28, 'T' => 29,
+		'U' => 30, 'V' => 31, 'W' => 32,
+		'X' => 33, 'Y' => 34, 'Z' => 35,
+	];
+
+	protected static $val_char_dict = [
+		'0', '1', '2', '3', '4', '5', 
+		'6', '7', '8', '9', 'A', 'B',
+		'C', 'D', 'E', 'F', 'G', 'H',
+		'I', 'J', 'K', 'L', 'M', 'N',
+		'O', 'P', 'Q', 'R', 'S', 'T',
+		'U', 'V', 'W', 'X', 'Y', 'Z',
 	];
 
 	/**
 	 * Create a new Mod3736 instance.
 	 *
-	 * @param string $code default NULL
+	 * @param string $code
 	 *
 	 * @return void
 	 */
-	public function __construct(?string $code = NULL) {
-		if ($code) {
-			$this->code = self::parseCode($code);
-		}
+	public function __construct(string $code) {
+		$this->code = self::parseCode($code);
 	}
 	
 	/**
@@ -93,8 +76,7 @@ class Mod3736
 	 * @return string
 	 */
 	public function encode(): string {
-		$this->getCodeOrFail();
-		$this->code .= $this->generateCheckChar($this->code);
+		$this->code .= $this->generateCheckChar();
 		return $this->code;
 	}
 	
@@ -102,17 +84,14 @@ class Mod3736
 	 * Generate a check character for the given string
 	 * or the class's current code.
 	 *
-	 * @param string $code default NULL
-	 *
 	 * @throws InvalidArgumentException
 	 *
 	 * @return string
 	 */
-	public function generateCheckChar(?string $code = NULL): string {
-		if (!$code) { $code = $this->getCodeOrFail(); }
+	public function generateCheckChar(): string {
 		$p = 36;
-		for($j = 0; $j < mb_strlen($code); $j++) {
-			$a = self::charToVal($code[$j]);
+		for($j = 0; $j < mb_strlen($this->code); $j++) {
+			$a = self::charToVal($this->code[$j]);
 			$s = ($p % 37) + $a;
 			$p = ($s % 36 ?: 36) * 2;
 		}
@@ -125,16 +104,11 @@ class Mod3736
 	 * for the given code.  Will use the class's code if
 	 * one is not passed as an argument.
 	 *
-	 * @param string $code default NULL
-	 *
-	 * @throws InvalidArgumentException
-	 *
 	 * @return bool
 	 */
-	public function validateCheckChar(?string $code = NULL): bool {
-		if (!$code) { $code = $this->getCodeOrFail(); }
-		$check_char = self::getCheckChar($code);
-		$valid_check_char = $this->generateCheckChar(substr($code, 0, -1));
+	public function validateCheckChar(): bool {
+		$check_char = self::getCheckChar();
+		$valid_check_char = $this->generateCheckChar(substr($this->code, 0, -1));
 		return ($check_char == $valid_check_char);
 	}
 	
@@ -163,22 +137,10 @@ class Mod3736
 	 * or the instance's code, assuming that character
 	 * is a check character.
 	 *
-	 * @param string $code default null
-	 *
-	 * @throws InvalidArgumentException
-	 *
 	 * @return string
 	 */
-	public function getCheckChar(?string $code = NULL): string {
-		if (!$code) { $code = $this->getCodeOrFail(); }
-		return substr($code, -1);
-	}
-
-	protected function getCodeOrFail(): string {
-		if ($this->code == NULL) {
-			throw new InvalidArgumentException('Cannot perform method on NULL');
-		}
-		return $this->code;
+	public function getCheckChar(): string {
+		return substr($this->code, -1);
 	}
 	
 	/**
@@ -189,7 +151,7 @@ class Mod3736
 	 * @return int
 	 */
 	protected static function charToVal(string $char): int {
-		return self::$val_dict[$char];
+		return self::$char_val_dict[$char];
 	}
 	
 	/**
@@ -200,7 +162,7 @@ class Mod3736
 	 * @return string
 	 */
 	protected static function valToChar(int $val): string {
-		return array_search($val, self::$val_dict);
+		return self::$val_char_dict[$val];
 	}
 	
 	/**
