@@ -11,7 +11,6 @@
 namespace Soundways\Iso7064;
 
 use InvalidArgumentException;
-use Soundways\Iso7064\Iso7064FormattingException;
 
 /**
  * This is the Mod3736 class.
