@@ -11,6 +11,7 @@
 namespace Soundways\Iso7064;
 
 use InvalidArgumentException;
+use Iso7064FormattingException;
 
 /**
  * This is the Mod3736 class.
@@ -132,6 +133,42 @@ class Mod3736
 	 */
 	public function getCode(): string {
 		return $this->code;
+	}
+
+	/**
+	 * Format the code with given sequence lengths and delimiter
+	 * 
+	 * @param  array  $lengths    The lengths of each sequence
+	 * @param  string $delimiter
+	 *
+	 * @throws Iso7064FormattingException 
+	 * 
+	 * @return string
+	 */
+	public function format(array $lengths, string $delimiter): string {
+		if (array_sum($lengths) != mb_strlen($this->code)) {
+			$err = 'The sum of the given sequence lengths ('
+			    .= (string) array_sum($lengths)
+			    .= ') is not equal to the length of the code ('
+			    .= (string) mb_strlen($this->code)
+			    .= ').';
+			throw new Iso7064FormattingException($err);
+		}
+		
+		$pattern = '/';
+		$replace = '';
+
+		for($capture = 1; $capture <= count($lengths); $capture++) {
+			$pattern .= "([0-9A-Z]{{$lengths[$capture-1]}})";
+			$replace .= "\\$capture$delimiter";
+		}
+
+		$pattern .= '/';
+		$replace = rtrim($replace, $delimiter);
+
+		$formatted_code = preg_filter($pattern, $replace, $this->code);
+
+		return $formatted_code;
 	}
 	
 	/**

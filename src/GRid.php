@@ -135,12 +135,14 @@ class GRid extends Mod3736
 	 * Helper function which returns the GRid
 	 * code in standard hyphen-delimited format.
 	 *
+	 * @param  $lengths   Not used in this implementation
+	 * @param  $delimiter Not used in this implementation
+	 *
 	 * @throws GRidException
-	 * @throws InvalidArgumentException
 	 *
 	 * @return string Hypen-delimited GRid
 	 */
-	public function getDelimitedGRid(): string {
+	public function format(?array $lengths=NULL, ?string $delimiter=NULL): string {
 		$grid = $this->code;
 
 		$this->checkFormat($grid);

@@ -66,6 +66,10 @@ Setter for the `$code` attribute.  Strips non-alphanumeric characters automatica
 
 Getter for the `$code` attribute.
 
+#### function format(array $lengths, string $delimiter): string
+
+Returns the `$code` attribute delimited with sequences of the given lengths.  For example, if the current code is `'ABCDEFGR'` and you pass `[1, 3, 3, 1]` as the lengths array with `'-'` as the delimiter, the function will return `'A-BCD-EFG-R'`.
+
 #### function getCheckChar(): string
 
 Helper function for returning the last character of the object's `$code` attribute. 
@@ -92,9 +96,11 @@ This includes not encoding already-encoded GRids and not validating unencoded GR
 
 `setCode()`
 
-#### function getDelimitedGRid(): string
+#### function format(): string
 
 Returns object's `$code` attribute delimited in the format XX-XXXXX-XXXXXXXXXX-X per GRid standard 2.1.  Function will throw GRidException if called while the `$code` attribute is unencoded.
+
+As this function inherits from `Mod3736::format()`, it can be passed the `$lengths` and `$delimiter` arguments; however, these are ignored in favor of enforcing the GRid format.  No arguments need to be passed to this function.
 
 #### static function checkGRid(string $code): bool
 
