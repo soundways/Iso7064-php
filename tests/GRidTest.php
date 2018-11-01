@@ -247,7 +247,7 @@ class GRidTest extends TestCase
 			$grid->encode();
 			$this->assertTrue(preg_match(
 				'/A1-[0-9A-Za-z]{5}-[0-9A-Za-z]{10}-[0-9A-Za-z]/', 
-				$grid->getDelimitedGRid()
+				$grid->format()
 			) == 1);
 		}
 	}
@@ -260,7 +260,7 @@ class GRidTest extends TestCase
 	{
 		$this->expectException(GRidException::class);
 		$grid = new GRid($this->goodGRidsUnencoded()[0]);
-		$grid->getDelimitedGRid();
+		$grid->format();
 	}
 
 	/**

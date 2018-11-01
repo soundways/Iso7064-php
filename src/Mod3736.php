@@ -148,13 +148,13 @@ class Mod3736
 	public function format(array $lengths, string $delimiter): string {
 		if (array_sum($lengths) != mb_strlen($this->code)) {
 			$err = 'The sum of the given sequence lengths ('
-			    .= (string) array_sum($lengths)
-			    .= ') is not equal to the length of the code ('
-			    .= (string) mb_strlen($this->code)
-			    .= ').';
+			     . (string) array_sum($lengths)
+			     . ') is not equal to the length of the code ('
+			     . (string) mb_strlen($this->code)
+			     . ').';
 			throw new Iso7064FormattingException($err);
 		}
-		
+
 		$pattern = '/';
 		$replace = '';
 
