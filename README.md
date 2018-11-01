@@ -37,9 +37,9 @@ $grid->getDelimitedGRid();
 
 The namespace contains the `Mod3736` class for general-purpose encoding within the ISO standard and the `GRid` class which enforces GRid specific requirements and includes some helper functions.
 
-### Mod3736
+### Mod
 
-The `Mod3736` class provides general functionality for encoding and verifying check characters using ISO 7064 Mod 37, 36.  If passed a code in the constructor, the code will be stripped of non-alphanumeric characters and stored in the object's `$code` attribute.
+`Mod` is an abstract class providing general functionality for encoding and verifying check characters using ISO 7064, regardless of modulus.  Codes will be stripped of non-alphanumeric characters and stored in the object's `$code` attribute.
 
 #### function encode(): string
 
@@ -50,9 +50,11 @@ $code = 'ABCDEFG';
 $code .= $mod->generateCheckChar($code);
 ```
 
-#### function generateCheckChar(string $code): string
+#### function generateCheckChar(?string $code): string
 
 Generates and returns a check character for the given code.  If a code is not passed as an argument, the function will instead use the object's `$code` attribute.
+
+To create a class for a specific modulus, this function must be overridden with the algorithm for that modulus.
 
 #### function validateCheckChar(): bool
 
@@ -72,7 +74,15 @@ Returns the `$code` attribute delimited with sequences of the given lengths.  Fo
 
 #### function getCheckChar(): string
 
-Helper function for returning the last character of the object's `$code` attribute. 
+Helper function for returning the last character of the object's `$code` attribute.
+
+### Mod3736
+
+The `Mod3736` class extends `Mod` with functionality for Mod 37, 36.
+
+#### function generateCheckChar(?string $code): string
+
+Generates a check character following Mod 37, 36
 
 ### GRid
 
