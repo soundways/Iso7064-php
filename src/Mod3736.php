@@ -11,7 +11,7 @@
 namespace Soundways\Iso7064;
 
 use InvalidArgumentException;
-use Iso7064FormattingException;
+use Soundways\Iso7064\Iso7064FormattingException;
 
 /**
  * This is the Mod3736 class.
@@ -146,6 +146,11 @@ class Mod3736
 	 * @return string
 	 */
 	public function format(array $lengths, string $delimiter): string {
+		if (strpos($delimiter, "\\") || strpos($delimiter, "\\") === 0) {
+			throw new Iso7064FormattingException('Do not use backslashes or ' 
+			                                    .'escaped characters as the '
+			                                    .'delimiter.');
+		}
 		if (array_sum($lengths) != mb_strlen($this->code)) {
 			$err = 'The sum of the given sequence lengths ('
 			     . (string) array_sum($lengths)

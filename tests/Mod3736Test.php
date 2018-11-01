@@ -11,6 +11,8 @@
 namespace Soundways\Iso7064\Tests;
 
 use Soundways\Iso7064\Mod3736;
+use Soundways\Iso7064\Iso7064FormattingException;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +22,41 @@ use PHPUnit\Framework\TestCase;
  */
 class Mod3736Test extends TestCase
 {	
+	public function formatOptions(): array
+	{
+		return [
+			[
+				'code' => 'ABCDEFGR',
+				'lengths' => [1, 3, 3, 1],
+				'delim' => '-',
+				'formatted' => 'A-BCD-EFG-R',
+			],
+			[
+				'code' => 'ABCDEFGR',
+				'lengths' => [1, 2, 2, 3],
+				'delim' => '/',
+				'formatted' => 'A/BC/DE/FGR',
+			],
+			[
+				'code' => 'XYZ123I',
+				'lengths' => [4, 2, 1],
+				'delim' => ';',
+				'formatted' => 'XYZ1;23;I',
+			],
+			[
+				'code' => 'XYZ123I',
+				'lengths' => [6, 1],
+				'delim' => '::',
+				'formatted' => 'XYZ123::I',
+			],
+			[
+				'code' => 'XYZ123I',
+				'lengths' => [7],
+				'delim' => '+',
+				'formatted' => 'XYZ123I',
+			],
+		];
+	}
 	/**
 	 * Test that new instance can be created with code.
 	 */
@@ -85,5 +122,39 @@ class Mod3736Test extends TestCase
 	{
 		$mod = new Mod3736('XYZ123H');
 		$this->assertFalse($mod->validateCheckChar());
+	}
+
+	/**
+	 * Test that format returns expected values with good input
+	 */
+	public function testCanFormatWithGivenSequenceLengthsAndDelimiters(): void
+	{
+		foreach($this->formatOptions() as $option) {
+			$mod = new Mod3736($option['code']);
+			$this->assertEquals(
+				$option['formatted'],
+				$mod->format($option['lengths'], $option['delim'])
+			);
+		}
+	}
+
+	/**
+	 * Test that format rejects bad lengths
+	 */
+	public function testRejectsFormattingWithBadLengths(): void
+	{
+		$this->expectException(Iso7064FormattingException::class);
+		$mod = new Mod3736('ABCDEFGR');
+		$mod->format([1, 3, 3, 2], '-');
+	}
+
+	/**
+	 * Test that escape character delimiters are safely rejected
+	 */
+	public function testFormatWithBadDelimiterFails(): void
+	{
+		$this->expectException(Iso7064FormattingException::class);
+		$mod = new Mod3736('ABCDEFGR');
+		$mod->format([1, 3, 3, 1], '\\');
 	}
 }
