@@ -1,5 +1,5 @@
 {
-		"name": "Soundways/Iso7064",
+		"name": "soundways/iso7064",
 		"description": "An ISO 7064 check character calculator created for GRid codes",
 		"keywords": ["iso", "check", "character", "GRid"],
 		"homepage": "https://github.com/Soundways/Iso7064",
@@ -13,7 +13,7 @@
 				}
 		],
 		"require": {
-				"php": "^7.0"
+				"php": "^7.1"
 		},
 		"suggest": {
 			"ext-mbstring": "mbstring is required, but can be substituted with symfony/polyfill-mbstring when ext-mbstring is unavailable"
@@ -30,6 +30,6 @@
 				}
 		},
 		"require-dev": {
-				"phpunit/phpunit": "^7"
+				"phpunit/phpunit": "^7.0"
 		}
 }
