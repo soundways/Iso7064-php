@@ -37,6 +37,8 @@ class Mod3736 extends Mod
 			$s = ($p % 37) + $a;
 			$p = ($s % 36 ?: 36) * 2;
 		}
-		return self::convertCharVal(37 - ($p % 37));
+		$x = 37 - ($p % 37);
+		if ($x == 36) $x = 0;
+		return self::convertCharVal($x);
 	}
 }

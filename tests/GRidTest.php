@@ -282,4 +282,18 @@ class GRidTest extends TestCase
 		$this->expectException(GRidException::class);
 		$grid = new GRid($this->badlyFormattedGRids()[1]);
 	}
+
+	/** 
+	 * Tests for edge case that can cause the character map
+	 * to request a non-existence indec
+	 */
+	public function testEncodesCharThirtySix(): void
+	{
+		$grid = new GRid('A10458Q000000000L');
+		$grid->encode();
+		$this->assertEquals(
+			'A1-0458Q-000000000L-0',
+			$grid->format()
+		);
+	}
 }
