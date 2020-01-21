@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * This is the Mod3736 test class.
  *
- * @author  James Ekrut <james@soundways.com>
+ * @author  Bridget Macfarlane <bridget@soundways.com>
  */
 class Mod3736Test extends TestCase
 {	

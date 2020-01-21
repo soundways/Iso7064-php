@@ -15,7 +15,7 @@ namespace Soundways\Iso7064;
  * To implement a new Modulus, extend this class
  * and override generateCheckChar().
  *
- * @author James Ekrut <james@soundways.com>
+ * @author Bridget Macfarlane <bridget@soundways.com>
  */
 abstract class Mod
 {

@@ -15,7 +15,7 @@ use InvalidArgumentException;
 /**
  * This is the Mod3736 class.
  *
- * @author James Ekrut <james@soundways.com>
+ * @author Bridget Macfarlane <bridget@soundways.com>
  */
 class Mod3736 extends Mod
 {

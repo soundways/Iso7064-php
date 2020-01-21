@@ -15,7 +15,7 @@ namespace Soundways\Iso7064;
  * Different mods and implementation standard's 
  * unique errors will all inherit from this class.
  *
- * @author James Ekrut <james@soundways.com>
+ * @author Bridget Macfarlane <bridget@soundways.com>
  */
 class Iso7064FormattingException extends \Exception
 {

@@ -13,7 +13,7 @@ namespace Soundways\Iso7064;
 /**
  * This is the GRid exception class.
  *
- * @author James Ekrut <james@soundways.com>
+ * @author Bridget Macfarlane <bridget@soundways.com>
  */
 class GRidException extends Iso7064FormattingException
 {

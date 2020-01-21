@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * This is the GRid test class.
  *
- * @author  James Ekrut <james@soundways.com>
+ * @author  Bridget Macfarlane <bridget@soundways.com>
  */
 class GRidTest extends TestCase
 {
