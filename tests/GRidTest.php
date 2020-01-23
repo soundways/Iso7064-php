@@ -8,8 +8,6 @@
  * the LICENSE file that was distributed with this source code
  */
 
-
-
 namespace Soundways\Iso7064\Tests;
 
 use Soundways\Iso7064\GRid;
