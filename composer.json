@@ -2,7 +2,7 @@
 		"name": "soundways/iso7064",
 		"description": "An ISO 7064 check character calculator created for GRid codes",
 		"keywords": ["iso", "check", "character", "GRid"],
-		"homepage": "https://github.com/Soundways/Iso7064",
+		"homepage": "https://github.com/soundways/Iso7064-php",
 		"license": "MIT",
 		"authors": [
 				{
@@ -30,6 +30,6 @@
 				}
 		},
 		"require-dev": {
-				"phpunit/phpunit": "^8.0"
+				"phpunit/phpunit": "^8.5"
 		}
 }
