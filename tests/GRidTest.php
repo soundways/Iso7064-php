@@ -296,4 +296,94 @@ class GRidTest extends TestCase
 			$grid->format()
 		);
 	}
+
+	/**
+	* Tests for already encoded GRid from 
+	* function generateCheckChar()
+	* 
+	* Expected error message for testing
+	* an encoded GRid 
+	* for check char even though it
+	* already exists 
+	*/
+	public function testRejectAlreadyEncodedGridFromGenerateCheckChar():void {
+		foreach($this->goodGRidsEncoded() as $grid){
+			$this->expectException(GRidException::class);
+			$newGrid = new GRid($grid);
+			$newGrid->generateCheckChar();
+		}
+	}
+
+	/**
+	* Test for instance where the function
+	* generateCheckChar will continue to 
+	* test a GRid for each array of string
+	* instead of comparing and storing an 
+	* empty string
+	* 
+	*/
+	public function testRejectGenerateCheckCharFromAlreadyEncodedExternalGrid():void {
+		$newGrid = new GRid($this->goodGridsEncoded()[0]);
+		foreach($this->goodGRidsEncoded() as $grid){
+			$this->expectException(GRidException::class);
+			$newGrid->generateCheckChar($grid);
+		}
+	}
+
+	/**
+	* Test to verify if setCode is valid
+	* when compared to a any good GRid
+	*/
+	public function testValidatesSetCodeFromAnyGoodGrids():void {
+		$grid = new GRid($this->goodGRids()[0]);
+		foreach($this->goodGRids() as $code){
+			$newGrid = new GRid($code);
+			$grid->setCode($code);
+			$this->assertEquals($grid->getCode(), $newGrid->getCode());
+		}
+	}
+
+	/**
+	* Test to verify if setCode is valid
+	* when compared to any good encoded
+	* GRid
+	*/
+	public function testValidatesSetCodeFromGoodEncodedGrids():void{
+		$grid = new GRid($this->goodGRidsEncoded()[0]);
+		foreach($this->goodGRidsEncoded() as $code){
+			$newGrid = new GRid($code);
+			$grid->setCode($code);
+			$this->assertEquals($grid->getCode(), $newGrid->getCode());
+		}
+	}
+
+	/**
+	* Test to verify if setCode is valid
+	* when compared to any good unencoded
+	* GRid
+	*/
+	public function testValidatesSetCodeFromGoodUnencodedGrids():void {
+		$grid = new GRid($this->goodGRidsUnencoded()[0]);
+		foreach($this->goodGRidsUnencoded() as $code){
+			$newGrid = new GRid($code);
+			$grid->setCode($code);
+			$this->assertEquals($grid->getCode(), $newGrid->getCode());
+		}
+	}
+
+	/*
+	* Test for rejection of Bad Unencoded Grids
+	* in the function setCode
+	* 
+	* Should throw error message 
+	*/
+	public function testRejectsSetCodeFromBadlyFormattedGrids():void {
+		$grid = new GRid($this->goodGRidsEncoded()[0]);
+		foreach($this->badlyFormattedGRids() as $code){
+			$this->expectException(GRidException::class);
+			$grid->setCode($code);
+		}
+
+	}
+
 }
