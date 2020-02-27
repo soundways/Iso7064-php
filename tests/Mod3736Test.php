@@ -157,4 +157,39 @@ class Mod3736Test extends TestCase
 		$mod = new Mod3736('ABCDEFGR');
 		$mod->format([1, 3, 3, 1], '\\');
 	}
+
+	/**
+	* Test to verify that setCode 
+	* accepts any valid string 
+	*/
+	public function testSetCodeAcceptsValidStringInput():void {
+		foreach($this->formatOptions() as $option) {
+			$mod  = new Mod3736($option['code']);
+			$mod2  = new Mod3736($option['code']);
+			$mod2->setCode($mod->getCode());
+			$this->assertEquals($mod, $mod2);
+		}
+	}
+	
+	/**
+	* Test to verify that setCode 
+	* rejects any invalid string 
+	* @expectException Iso7064 Formatting Exception
+	*/
+	public function testSetCodeRejectsInvalidInput(): void {
+		$this->expectException(Iso7064FormattingException::class);
+		
+		$mod = new Mod3736('something');
+		$mod->setCode('!@#$%^&*');
+		
+	}
+	/**
+	* Test rejects any invalid string 
+	* @expectException Iso7064 Formatting Exception
+	*/
+	public function testRejectInvalidStringInstantiate(): void {
+		$this->expectException(Iso7064FormattingException::class);
+
+		$badString = new Mod3736('!@#$%^&*');
+	}
 }
