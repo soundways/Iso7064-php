@@ -1,3 +1,4 @@
 language: php
-rvm:
-  - 7.1
+php:
+  - '7.1'
+script: phpunit --whitelist src --bootstrap vendor/autoload.php tests
