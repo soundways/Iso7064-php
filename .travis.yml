@@ -12,3 +12,7 @@ before_script:
 
 # Commands you want to run that will verify your build
 script: phpunit
+
+# fast_finished: If your build fails, then do not continue tryong and just stop
+matrix:
+  fast_finished: true 
