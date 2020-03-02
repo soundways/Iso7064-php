@@ -1,6 +1,6 @@
 # ISO 7064
 
-[![Build Status](https://travis-ci.com/soundways/Iso7064-php.svg?branch=master)](https://travis-ci.com/soundways/Iso7064-php) ![PHP from Travis config](https://img.shields.io/travis/php-v/soundways/Iso7064-php)
+[![Build Status](https://travis-ci.com/soundways/Iso7064-php.svg?branch=master)](https://travis-ci.com/soundways/Iso7064-php)      ![PHP from Travis config](https://img.shields.io/travis/php-v/soundways/Iso7064-php)     [![codecov](https://codecov.io/gh/soundways/Iso7064-php/branch/master/graph/badge.svg)](https://codecov.io/gh/soundways/Iso7064-php)
 
 
 
