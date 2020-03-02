@@ -9,12 +9,22 @@ php:
 
 # Installations
 install:
+  - travis_retry composer self-update
   - travis_retry composer install --no-interaction --no-suggest
 
 # Commands you want to run that will verify your build
 script: phpunit
 
-#allow_failures: Allow this build to fail under the specified environments
+# Test and generate Code Coverage report
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+# after_script:
+
+after_success:
+# Submit coverage report to https://codecov.io
+  - bash <(curl -s https://codecov.io/bash)
+
+# allow_failures: Allow this build to fail under the specified environments
 # fast_finished: If your build fails, then do not continue tryong and just stop
 matrix:
   allow_failures:
