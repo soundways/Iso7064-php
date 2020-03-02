@@ -1,14 +1,16 @@
+#Travis CI Configuration File
+
 # Required to run your project under the correct enviroment
 language: php
 
 # Versions of PHP you want your project to run with
 php:
+  - 7.1
   - 7.2
 
-# Commands to be run before your environment runs
-before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
+# Installations
+install:
+  - travis_retry composer install --no-interaction --no-suggest
 
 # Commands you want to run that will verify your build
 script: phpunit

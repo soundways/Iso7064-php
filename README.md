@@ -1,5 +1,7 @@
 # ISO 7064
 
+[![Build Status](https://travis-ci.com/soundways/Iso7064-php.svg?branch=master)](https://travis-ci.com/soundways/Iso7064-php)
+
 Soundways Iso7064 provides an implementation of ISO 7064:1983 Mod 37, 36, intended primarily for use in calculating the check character for [GRid standard 2.1](https://ifpi.org/downloads/GRid_Standard_v2_1.pdf).
 
 This requires PHP 7.1
