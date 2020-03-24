@@ -9,21 +9,22 @@ php:
 
 # Installations
 install:
-  - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --no-suggest
-  - php vendor/autoloader.php
+ - php composer.phar install --dev --no-interaction 
 
 # Commands you want to run that will verify your build
-script: phpunit
+script: 
+  - vendor/bin/phpunit
+# Submit coverage report to https://codecov.io
+  - bash <(curl -s https://codecov.io/bash)
 
 # Test and generate Code Coverage report
-  - vendor/bin/phpunit --coverage-clover=coverage.xml
+  - vendor/bin/phpunit --testdox --coverage-html coverage --whitelist src --bootstrap vendor/autoload.php tests
 
 # after_script:
 
 after_success:
-# Submit coverage report to https://codecov.io
-  - bash <(curl -s https://codecov.io/bash)
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --no-suggest
 
 # allow_failures: Allow this build to fail under the specified environments
 # fast_finished: If your build fails, then do not continue tryong and just stop
