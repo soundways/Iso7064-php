@@ -9,7 +9,8 @@ php:
 
 # Installations
 install:
-  - php vendor/autoloader.php
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --no-suggest
   - composer install
 
 # Commands you want to run that will verify your build
@@ -20,8 +21,6 @@ script:
 # after_script:
 
 after_success:
-  - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --no-suggest
 # Submit coverage report to https://codecov.io
   - bash <(curl -s https://codecov.io/bash)
 
