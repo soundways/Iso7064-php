@@ -17,6 +17,7 @@ install:
 script: 
 # Test and generate Code Coverage report
   - phpunit --testdox --coverage-html coverage --whitelist src --bootstrap vendor/autoload.php tests
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 # after_script:
 
