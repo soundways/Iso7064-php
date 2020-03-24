@@ -9,11 +9,12 @@ php:
 
 # Installations
 install:
- - php composer.phar install --dev --no-interaction 
+  - php vendor/bin/phpunit
+  - composer install
 
 # Commands you want to run that will verify your build
 script: 
-  - vendor/bin/phpunit
+
 # Submit coverage report to https://codecov.io
   - bash <(curl -s https://codecov.io/bash)
 
